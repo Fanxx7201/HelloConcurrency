@@ -16,7 +16,7 @@ public class Test {
 
         System.out.println("111111");
     }
-    /*报错: Error running 'Test': Cannot start process, the working directory 'D:\confxx\confxx' does not exist
+    /*  报错: Error running 'Test': Cannot start process, the working directory 'D:\confxx\confxx' does not exist
         Run - Edit configurations.
         然后点击Application左边的向下箭头，在Configuration下找到Working directory，删除或者设置成合适directory就可以。
      */
