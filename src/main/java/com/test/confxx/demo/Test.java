@@ -1,5 +1,9 @@
 package com.test.confxx.demo;
 
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * @ProjectName: confxx
  * @Package: com.test.confxx.demo
@@ -11,8 +15,27 @@ package com.test.confxx.demo;
  */
 public class Test {
 
+    private static Log log = LogFactory.getLog(Test.class);
 
     public static void main(String[] args) {
+
+
+        try {
+            String i = null;
+            i.length();
+
+        }catch (Exception e){
+            log.debug(e);
+        }
+
+
+
+
+
+
+
+
+
 
         System.out.println("111111");
     }

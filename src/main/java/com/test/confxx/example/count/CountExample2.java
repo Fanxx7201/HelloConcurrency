@@ -1,8 +1,7 @@
-package com.test.confxx;
+package com.test.confxx.example.count;
 
 import com.test.confxx.annoations.NotThreadSafe;
 import com.test.confxx.demo.Test;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -10,6 +9,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @ProjectName: confxx
@@ -27,13 +27,13 @@ import java.util.concurrent.Semaphore;
  */
 //@Slf4j
 @NotThreadSafe //这个类是线程不安全的.结果不确定.
-public class ConcurrencyTest {
+public class CountExample2 {
     //请求的总数
     public static int clientTotal = 5000;
     //同时并发执行的线程数
     public static int threadTotal = 200;
 
-    public static int count = 0;
+    public static AtomicInteger count = new AtomicInteger(0);
 
     private static Log log = LogFactory.getLog(Test.class);
 
@@ -64,13 +64,7 @@ public class ConcurrencyTest {
     }
 
     private static void add(){
-        count++; //这个是线程不安全的写法.
-        /*try {
-            String i = null;
-            i.length();
+        //count++; //这个是线程不安全的写法.
 
-        }catch (Exception e){
-            log.error("", e);
-        }*/
     }
 }
