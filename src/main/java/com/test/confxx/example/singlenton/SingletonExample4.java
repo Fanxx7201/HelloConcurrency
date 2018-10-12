@@ -17,11 +17,16 @@ public class SingletonExample4 { //懒汉模式, 单例实例是在第一次使�
     private SingletonExample4(){
 
     }
-
+    //单线程情况下发生了什么
     //1.分配对象内存空间.
     //2.初始化对象
     //3.设置instance指向刚分配的内存.
 
+
+    //多线程情况下, JVM和CPU优化, 发生了指令重排
+    //1.分配对象内存空间.
+    //3.设置instance指向刚分配的内存.
+    //2.初始化对象
 
 
 
