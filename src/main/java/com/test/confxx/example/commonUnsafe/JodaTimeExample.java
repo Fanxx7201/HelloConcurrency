@@ -16,7 +16,7 @@ import org.joda.time.format.DateTimeFormatter;
  * <p>Copyright: Copyright (c) 2018</p>
  */
 @ThreadSafe
-public class JodaTimeExample {
+public class JodaTimeExample { //线程安全的, 推荐使用.
 
     private static DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyyMMdd");
 
