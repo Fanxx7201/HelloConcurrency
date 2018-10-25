@@ -14,7 +14,9 @@ import java.util.Vector;
  * <p>Copyright: Copyright (c) 2018</p>
  */
 @NotThreadSafe
-public class VectorExample { //因为调用顺序的差异,不同线程可能触发线程不安全的问题
+public class VectorExample {
+    //代码运行会数组越界异常. 虽然remove , get都是线程安全的, 但是调用顺序的关系, 可能是先remove掉了, 再get肯定就报错了.
+    //因为调用顺序的差异,不同线程可能触发线程不安全的问题
     //为了保证线程安全, 要在方法调用端做一些额外的措施.
 
     private static Vector<Integer> vector = new Vector<>(); //同步容器Vector对象
