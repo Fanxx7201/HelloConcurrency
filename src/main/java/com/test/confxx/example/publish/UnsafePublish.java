@@ -34,8 +34,5 @@ public class UnsafePublish {
         unsafePublish.getStates()[0] = "d"; //这样,通过public方法,可以任意的去更改数组中的值.
         //我们无法保证这个对象是否被修改过.所以是线程不安全的.
         log.info(Arrays.toString(unsafePublish.getStates()));
-
-
-
     }
 }

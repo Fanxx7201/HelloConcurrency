@@ -1,14 +1,14 @@
-package com.test.confxx.example.count;
+package com.test.confxx.example.concurrent;
 
-import com.test.confxx.annoations.NotThreadSafe;
+import com.test.confxx.annoations.ThreadSafe;
 import com.test.confxx.demo.Test;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.assertj.core.util.Lists;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.*;
 
 /**
  * @ProjectName: confxx
@@ -18,23 +18,17 @@ import java.util.concurrent.Semaphore;
  * @Author: fanxx
  * @CreateDate: 2018/9/27 17:07
  * <p>Copyright: Copyright (c) 2018</p>
- * 1.信号量semaphore ,是计数信号量.管理一系列的许可证.每个acquire方法阻塞，直到有一个许可证可以获得然后拿走一个许可证；
- * 每个release方法增加一个许可证，这可能会释放一个阻塞的acquire方法。
- * 然而，其实并没有实际的许可证这个对象，Semaphore只是维持了一个可获得许可证的数量。
- * Semaphore经常用于限制获取某种资源的线程数量。
- * 2.CountDownLatch :利用它可以实现类似计数器的功能。比如有一个任务A，
- * 它要等待其他4个任务执行完毕之后才能执行，此时就可以利用CountDownLatch来实现这种功能了。
- * CountDownLatch可以阻塞线程,并保证线程在满足特定条件的时候,继续执行线程.
  */
 //@Slf4j
-@NotThreadSafe //这个类是线程不安全的.结果不确定.
-public class CountExample1 {
+@ThreadSafe //线程安全的.
+public class CopyOnWriteArrayListExample {
     //请求的总数
     public static int clientTotal = 5000;
     //同时并发执行的线程数
     public static int threadTotal = 200;
 
-    public static int count = 0;
+    //把list做成同步容器类.
+    public static List<Integer> list = new CopyOnWriteArrayList<>();
 
     private static Log log = LogFactory.getLog(Test.class);
 
@@ -47,10 +41,11 @@ public class CountExample1 {
         final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
         //放入请求,请求放入到线程池中.
         for (int i = 0; i < clientTotal; i++){
+            final int count = i;
             executorService.execute(() ->{
                 try{
                     semaphore.acquire(); //判断当前的线程能否被执行.如果达到一定并发数,这个add可能会临时被阻塞掉.
-                    add();
+                    update(count);
                     semaphore.release(); //释放当前的进程.
 
                 }catch (Exception e){
@@ -61,11 +56,10 @@ public class CountExample1 {
         }
         countDownLatch.await();//await可以保证之前的countDown必须减为0,这个前提是所有的进程必须执行完.
         executorService.shutdown();
-        //log.info("count:{}", count);
+        log.info(list.size());
     }
 
-    private static void add(){
-        //count++; //这个是线程不安全的写法.
-
+    private static void update(int i){
+        list.add(i);
     }
 }
