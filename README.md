@@ -3,7 +3,7 @@
 > 2018.10.30 : J.U.C之AQS-CyclicBarrier
 
 
-<h2 id = "">6-4 J.U.C之AQS-CyclicBarrier</h2>
+<h2 id = "">J.U.C之AQS-CyclicBarrier</h2>
 <h3 id = "代码">代码</h3> 
 * com.test.confxx.example.aqs01
 <h3 id = "概念">概念</h3> 
@@ -13,3 +13,20 @@
 <h3 id = "场景举例">场景举例</h3> 
 * 场景举例:  多线程计算数据, 最后合并计算结果. 用excel保存所有银行流水. 线程先计算每一页的日均银行流水, 最后action计算出整个的日均银行流水. 
 
+<h2 id = "">J.U.C之AQS-ReentrantLock与锁</h2>
+
+<h3 id = "代码">代码</h3> 
+* com.test.confxx.example.lock
+
+<h3 id = "概念">ReentrantLock与Synchronized的区别</h3> 
+* 可重入性：两者的锁都是可重入的，差别不大，有线程进入锁，计数器自增1，等下降为0时才可以释放锁
+* 锁的实现：synchronized是基于JVM实现的（用户很难见到，无法了解其实现），ReentrantLock是JDK实现的(可见源码)。
+* 性能区别：在最初的时候，二者的性能差别差很多，当synchronized引入了偏向锁、轻量级锁（自选锁）后，二者的性能差别不大，官方推荐synchronized（写法更容易、在优化时其实是借用了ReentrantLock的CAS技术，试图在用户态就把问题解决，避免进入内核态造成线程阻塞）
+* 功能区别： 
+ （1）便利性：synchronized更便利，它是由编译器保证加锁与释放。ReentrantLock是需要手动释放锁，所以为了避免忘记手工释放锁造成死锁，所以最好在finally中声明释放锁。 
+ （2）锁的细粒度和灵活度，ReentrantLock优于synchronized
+<h3 id = "如何选择锁？">如何选择锁？</h3> 
+  1、当只有少量竞争者，使用synchronized <br>
+  2、竞争者不少但是线程增长的趋势是能预估的，使用ReetrantLock <br>
+  3、synchronized不会造成死锁，jvm会自动释放死锁。(一定要有unlock保证解锁)<br>
+  

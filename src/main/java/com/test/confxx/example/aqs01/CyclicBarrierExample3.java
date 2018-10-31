@@ -37,7 +37,6 @@ public class CyclicBarrierExample3 {
                 }catch (Exception e){
                     log.error(e);
                 }
-
             });
         }
         executorService.shutdown();
@@ -49,6 +48,5 @@ public class CyclicBarrierExample3 {
         barrier.await();
         //继续执行打印日志
         log.info("continue"+ threadNum);
-
     }
 }
